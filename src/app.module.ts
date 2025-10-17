@@ -7,9 +7,10 @@ import { TournamentModule } from './tournament/tournament.module';
 import { BetModule } from './bet/bet.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { CommissionModule } from './commission/commission.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, GameModule, TournamentModule, BetModule, TransactionModule, CommissionModule],
+  imports: [UserModule, GameModule, TournamentModule, BetModule, TransactionModule, CommissionModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

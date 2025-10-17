@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { CommissionController } from './commission.controller';
 
-@Module({})
+@Module({
+  controllers: [CommissionController]
+})
 export class CommissionModule {}
