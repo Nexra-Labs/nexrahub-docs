@@ -1,69 +1,199 @@
-// base.repository.ts
+import { UpdateOptions } from 'mongodb';
 import {
   Model,
   HydratedDocument,
   UpdateQuery,
   QueryOptions,
   PopulateOptions,
-  Types
+  FilterQuery,
+  Types,
+  ProjectionType,
+  ClientSession,
+  PipelineStage,
 } from 'mongoose';
 
+/**
+ * Generic Base Repository for Mongoose models.
+ */
 export class BaseRepository<T> {
-  protected readonly model: Model<HydratedDocument<T>>;
+  protected readonly model: Model<T>;
 
-  constructor(model: Model<HydratedDocument<T>>) {
+  constructor(model: Model<T>) {
     this.model = model;
   }
 
-  async create(data: Partial<T>): Promise<HydratedDocument<T>> {
-    const newDocument = new this.model(data);
-    return newDocument.save() as Promise<HydratedDocument<T>>;
+  /**
+   * Create a new document
+   */
+  async create(data: Partial<T>, session?: ClientSession) {
+    const doc = new this.model(data);
+    return await doc.save({ session });
   }
 
+  /**
+   * Insert multiple documents (bulk create)
+   */
+  async insertMany(
+    data: Partial<T>[],
+    options?: { ordered?: boolean; session?: ClientSession },
+  ) {
+    return await this.model.insertMany(data, options);
+  }
+
+  /**
+   * Find all documents (optionally with filter, projection, and population)
+   */
+  async findAll(
+    filter: FilterQuery<T> = {},
+    projection?: ProjectionType<T>,
+    options?: QueryOptions<T>,
+    populate?: PopulateOptions | (string | PopulateOptions)[]
+  ): Promise<HydratedDocument<T>[]> {
+    const query = this.model.find(filter, projection, options);
+
+    if (populate) query.populate(populate);
+
+    return await query.exec();
+  }
+
+  /**
+   * Find one document by filter
+   */
+  async findOne(
+    filter: FilterQuery<T>,
+    projection?: ProjectionType<T>,
+    options?: QueryOptions<T>,
+    populate?: PopulateOptions | (string | PopulateOptions)[]
+  ): Promise<HydratedDocument<T> | null> {
+    const query = this.model.findOne(filter, projection, options);
+    if (populate) query.populate(populate);
+    return await query.exec();
+  }
+
+  /**
+   * Find document by ID
+   */
+  async findById(
+    id: string | Types.ObjectId,
+    projection?: ProjectionType<T>,
+    options?: QueryOptions<T>,
+    populate?: PopulateOptions | (string | PopulateOptions)[]
+  ): Promise<HydratedDocument<T> | null> {
+    const query = this.model.findById(id, projection, options);
+    if (populate) query.populate(populate);
+    return await query.exec();
+  }
+
+  /**
+   * Update by ID and return updated document
+   */
   async updateById(
     id: string | Types.ObjectId,
-    data: UpdateQuery<HydratedDocument<T>>,
-    options?: QueryOptions,
+    update: UpdateQuery<T>,
+    options: QueryOptions = { new: true },
   ): Promise<HydratedDocument<T> | null> {
-    return await this.model.findByIdAndUpdate(id, data, {
-      new: true,
-      ...options,
-    });
+    return await this.model.findByIdAndUpdate(id, update, options).exec();
   }
 
-  async findAll(): Promise<HydratedDocument<T>[]> {
-    return await this.model.find().exec();
+  /**
+   * Update many documents
+   */
+  async updateMany(
+    filter: FilterQuery<T>,
+    update: UpdateQuery<T>,
+    options?: UpdateOptions,
+  ): Promise<{ matchedCount: number; modifiedCount: number }> {
+    const res = await this.model.updateMany(filter, update, options).exec();
+    return {
+      matchedCount: res.matchedCount,
+      modifiedCount: res.modifiedCount,
+    };
   }
 
-  async findById(id: string | Types.ObjectId): Promise<HydratedDocument<T> | null> {
-    return await this.model.findById(id).exec();
+  /**
+   * Delete a document by ID
+   */
+  async deleteById(id: string | Types.ObjectId): Promise<HydratedDocument<T> | null> {
+    return await this.model.findByIdAndDelete(id).exec();
   }
 
-  async findOne(
-    query: object,
-    projection?: object,
-    options?: QueryOptions,
-    populate?: string | PopulateOptions | Array<string | PopulateOptions>,
-  ): Promise<HydratedDocument<T> | null> {
-    let queryBuilder = this.model.findOne(query, projection, options);
+  /**
+   * Delete by filter
+   */
+  async deleteMany(filter: FilterQuery<T>): Promise<number> {
+    const res = await this.model.deleteMany(filter).exec();
+    return res.deletedCount ?? 0;
+  }
 
-    if (populate) {
-      if (typeof populate === 'string') {
-        queryBuilder = queryBuilder.populate({ path: populate });
-      } else {
-        queryBuilder = queryBuilder.populate(populate);
+  /**
+   * Count documents by filter
+   */
+  async count(filter: FilterQuery<T> = {}): Promise<number> {
+    return await this.model.countDocuments(filter).exec();
+  }
+
+  /**
+   * Paginated find
+   */
+  async paginate(
+    filter: FilterQuery<T>,
+    {
+      page = 1,
+      limit = 10,
+      sort = { createdAt: -1 },
+      projection,
+      populate,
+    }: {
+      page?: number;
+      limit?: number;
+      sort?: Record<string, 1 | -1>;
+      projection?: ProjectionType<T>;
+      populate?: PopulateOptions | (string | PopulateOptions)[];
+    } = {},
+  ): Promise<{ data: HydratedDocument<T>[]; pagination: { total: number; page: number; pages: number; limit: number; }; }> {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.model
+        .find(filter, projection)
+        .sort(sort)
+        .skip(skip)
+        .limit(limit)
+        .populate(populate || [])
+        .exec(),
+      this.model.countDocuments(filter),
+    ]);
+
+    return {
+      data,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+        limit
       }
-    }
-
-    return await queryBuilder.exec();
+    };
   }
 
-  async delete(id: string): Promise<HydratedDocument<T> | null> {
-    const result = await this.model.findByIdAndDelete(id);
-    return result;
+  /**
+   * Start a transaction (useful for multi-step wallet ops)
+   */
+  async startTransaction(): Promise<ClientSession> {
+    return await this.model.db.startSession();
   }
 
-  async documentCount(query?: object): Promise<number> {
-    return await this.model.countDocuments(query);
+  /**
+   * Check if document exists
+   */
+  async exists(filter: FilterQuery<T>): Promise<boolean> {
+    const exists = await this.model.exists(filter);
+    return !!exists;
+  }
+
+  /**
+   * Raw aggregate pipeline
+   */
+  async aggregate<R = any>(pipeline: PipelineStage[]): Promise<R[]> {
+    return await this.model.aggregate(pipeline).exec();
   }
 }
