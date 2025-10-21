@@ -10,13 +10,16 @@ import { CommissionModule } from './commission/commission.module';
 import { AuthModule } from './auth/auth.module';
 import { GamerModule } from './gamer/gamer.module';
 import { ConfigModule } from '@nestjs/config';
+import { OtpModule } from './otp/otp.module';
 import appConfig from './config/app.config';
 import environmentValidation from './config/environment.validation';
+import { DatabaseModule } from './database/database.module';
 
 const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
+    DatabaseModule,
     UserModule,
     GameModule,
     TournamentModule,
@@ -30,7 +33,8 @@ const ENV = process.env.NODE_ENV;
       envFilePath: !ENV ? ".env" : `.env.${ENV}`,
       load: [appConfig],
       validationSchema: environmentValidation
-    }),],
+    }),
+    OtpModule,],
   controllers: [AppController],
   providers: [AppService],
 })

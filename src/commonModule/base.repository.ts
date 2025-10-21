@@ -96,6 +96,17 @@ export class BaseRepository<T> {
   }
 
   /**
+   * Update by filter
+   */
+  async updateOne(
+    filter: FilterQuery<T>,
+    update: UpdateQuery<T>,
+    options?: UpdateOptions,
+  ): Promise<{ matchedCount: number; modifiedCount: number }> {
+    return await this.model.updateOne(filter, update, options).exec();
+  }
+
+  /**
    * Update many documents
    */
   async updateMany(
