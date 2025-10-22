@@ -19,11 +19,16 @@ async function bootstrap() {
     .setDescription('API documentation for Nexrahub Core services')
     .setVersion('1.0.0')
     .addServer(`http://localhost:${PORT}/`, 'Local environment')
-    // .addSecurity('telegram-auth', {
-    //   type: 'apiKey',
-    //   name: 'x-init-data',
-    //   in: 'header',
-    // })
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        in: 'header',
+      },
+      'jwt-auth'
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

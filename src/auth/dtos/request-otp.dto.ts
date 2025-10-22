@@ -3,6 +3,6 @@ import { IsEmail, IsString, Length } from 'class-validator';
 
 export class RequestOtpDto {
     @IsEmail()
-    @ApiProperty({ example: 'user@example.com', description: 'User email' })
+    @ApiProperty({ example: 'chuksaginamada@gmail.com', description: 'User email' })
     email: string;
 }

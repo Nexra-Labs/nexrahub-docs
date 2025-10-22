@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { UserRole } from '../enums/user-role.enum';
 
 @Schema({
@@ -50,3 +50,16 @@ export class User extends Document {
     balance: number;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.virtual('id').get(function () {
+    return (this._id as Types.ObjectId).toHexString();
+});
+
+UserSchema.set('toJSON', {
+    virtuals: true,
+    transform: (_, ret) => {
+        delete ret._id;
+        return ret;
+    },
+});
+UserSchema.set('toObject', { virtuals: true });
