@@ -16,4 +16,6 @@ export default Joi.object({
     SOLANA_USDC_ADDRESS_MAINNET: Joi.string().required(),
     SOLANA_USDT_ADDRESS_TESTNET: Joi.string().required(),
     SOLANA_USDT_ADDRESS_MAINNET: Joi.string().required(),
+    JWT_SECRET: Joi.string().required(),
+    JWT_EXPIRATION: Joi.number().required(),
 });
