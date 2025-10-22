@@ -25,9 +25,8 @@ export class BaseRepository<T> {
   /**
    * Create a new document
    */
-  async create(data: Partial<T>, session?: ClientSession) {
-    const doc = new this.model(data);
-    return await doc.save({ session });
+  async create(data: Partial<T>, session?: ClientSession): Promise<HydratedDocument<T>> {
+    return await this.model.create([data], { session }).then((docs) => docs[0]);
   }
 
   /**

@@ -1,27 +1,41 @@
-import { Schema, Document } from 'mongoose';
-import { IOtp } from '../interfaces/otp.interface';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export const OtpSchema = new Schema<IOtp>({
-    email: {
+@Schema({
+    versionKey: false,
+    collection: 'otps'
+})
+export class Otp {
+    @Prop({
         type: String,
-        required: true
-    },
-    code: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    expiresAt: {
-        type: Date,
-        default: () => new Date(Date.now() + 5 * 60 * 1000) // 5 mins from creation
-    }
-}, {
-    versionKey: false
-});
+        required: true,
+        lowercase: true,
+        trim: true,
+        index: true,
+    })
+    email: string;
 
-export type OtpDocument = IOtp & Document;
-// TTL index — Mongo auto deletes after expiry
-OtpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+    @Prop({
+        type: String,
+        required: true,
+        trim: true,
+        length: 6
+    })
+    code: string;
+
+    @Prop({
+        type: Date,
+        default: Date.now,
+        immutable: true,
+    })
+    createdAt: Date;
+
+    @Prop({
+        type: Date,
+        default: () => new Date(Date.now() + 5 * 60 * 1000), // 5 minutes expiry
+        index: { expireAfterSeconds: 0 }, // TTL index (Mongo auto-delete)
+    })
+    expiresAt: Date;
+}
+
+export const OtpSchema = SchemaFactory.createForClass(Otp);
+OtpSchema.index({ email: 1, code: 1 });
