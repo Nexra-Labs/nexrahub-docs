@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './providers/auth.service';
 import { RequestOtpDto } from './dtos/request-otp.dto';
@@ -13,10 +13,10 @@ export class AuthController {
 
     @Post('request')
     @Auth(AuthType.None)
-    @HttpCode(200)
+    @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Request OTP for signup/signin' })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         description: 'OTP sent successfully',
         example: {
             "message": "OTP sent successfully",
@@ -29,10 +29,10 @@ export class AuthController {
 
     @Post('verify')
     @Auth(AuthType.None)
-    @HttpCode(200)
+    @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Verify OTP to complete login/signup' })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         description: 'OTP verified successfully',
         example: {
             "message": "Authentication successful",

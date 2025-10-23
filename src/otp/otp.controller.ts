@@ -23,7 +23,10 @@ export class OtpController {
         status: HttpStatus.OK,
         description: 'OTP sent successfully.',
         schema: {
-            example: { message: 'OTP sent successfully', email: 'user@example.com' },
+            example: {
+                message: 'OTP sent successfully',
+                email: 'user@example.com'
+            }
         }
     })
     async sendOtp(@ActiveUser() user: IUser) {

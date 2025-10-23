@@ -60,7 +60,7 @@ export class UserController {
         status: HttpStatus.BAD_REQUEST,
         description: 'User is already a developer',
         example: {
-            "statusCode": 400,
+            "statusCode": HttpStatus.BAD_REQUEST,
             "message": "User is already a developer",
             "timestamp": "2025-10-23T06:07:26.627Z",
             "path": "/user/upgrade"
