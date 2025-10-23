@@ -7,10 +7,11 @@ import {
 import { GameRepository } from '../repositories/game.repository';
 import { CreateGameDto } from '../dtos/create-game.dto';
 import { UpdateGameDto } from '../dtos/update-game.dto';
-import { Types } from 'mongoose';
+import { PopulateOptions, ProjectionType, QueryOptions, Types } from 'mongoose';
 import { OtpService } from 'src/otp/providers/otp.service';
 import { randomBytes } from 'crypto';
 import { GameGenreService } from './game-genre.service';
+import { IGame } from '../interfaces/game.interface';
 
 @Injectable()
 export class GameService {
@@ -77,6 +78,15 @@ export class GameService {
         await game.save();
 
         return { apiKey: game.apiKey };
+    }
+
+    async findById(
+        id: string | Types.ObjectId,
+        projection?: ProjectionType<IGame>,
+        options?: QueryOptions<IGame>,
+        populate?: PopulateOptions | (string | PopulateOptions)[]
+    ) {
+        return this.gameRepo.findById(id, projection, options, populate);
     }
 
     private generateApiKey(): string {

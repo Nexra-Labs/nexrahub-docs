@@ -30,11 +30,11 @@ const ENV = process.env.NODE_ENV;
     AuthModule,
     UserModule,
     GameModule,
+    GamerModule,
     TournamentModule,
     BetModule,
     TransactionModule,
     CommissionModule,
-    GamerModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? ".env" : `.env.${ENV}`,

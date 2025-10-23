@@ -34,7 +34,7 @@ export class GameController {
     @Authorize(UserRole.DEVELOPER)
     @ApiOperation({ summary: 'Create a new game' })
     @ApiResponse({
-        status: 201,
+        status: HttpStatus.CREATED,
         description: 'Game created successfully',
         schema: {
             example: {
@@ -75,7 +75,7 @@ export class GameController {
     @Authorize(UserRole.DEVELOPER)
     @ApiOperation({ summary: 'Update a game' })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         description: 'Game updated successfully',
         schema: {
             example: {

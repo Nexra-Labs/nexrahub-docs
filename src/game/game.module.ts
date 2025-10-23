@@ -17,6 +17,7 @@ import { OtpModule } from 'src/otp/otp.module';
     OtpModule
   ],
   providers: [GameService, GameGenreService, GameRepository, GameGenreRepository],
-  controllers: [GameGenreController, GameController]
+  controllers: [GameGenreController, GameController],
+  exports: [GameService]
 })
 export class GameModule { }
