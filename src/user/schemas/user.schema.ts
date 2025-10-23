@@ -55,11 +55,5 @@ UserSchema.virtual('id').get(function () {
     return (this._id as Types.ObjectId).toHexString();
 });
 
-UserSchema.set('toJSON', {
-    virtuals: true,
-    transform: (_, ret) => {
-        delete ret._id;
-        return ret;
-    },
-});
+UserSchema.set('toJSON', { virtuals: true, });
 UserSchema.set('toObject', { virtuals: true });
