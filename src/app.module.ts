@@ -27,13 +27,13 @@ const ENV = process.env.NODE_ENV;
 @Module({
   imports: [
     DatabaseModule,
+    AuthModule,
     UserModule,
     GameModule,
     TournamentModule,
     BetModule,
     TransactionModule,
     CommissionModule,
-    AuthModule,
     GamerModule,
     ConfigModule.forRoot({
       isGlobal: true,
