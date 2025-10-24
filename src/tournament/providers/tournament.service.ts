@@ -5,6 +5,7 @@ import { TournamentStatus } from '../enums/tournament-status.enum';
 import { CreateTournamentDto } from '../dtos/create-tournament.dto';
 import { UpdateTournamentDto } from '../dtos/update-tournament.dto';
 import { GameService } from 'src/game/providers/game.service';
+import { PopulateOptions, ProjectionType, QueryOptions, Types } from 'mongoose';
 
 @Injectable()
 export class TournamentService {
@@ -64,5 +65,18 @@ export class TournamentService {
         }
 
         return await this.tournamentRepo.updateById(tournament._id, { status: TournamentStatus.PUBLISHED }, { new: true, populate: { path: 'game', select: 'name' } });
+    }
+
+    async findById(
+        id: string | Types.ObjectId,
+        projection?: ProjectionType<ITournament>,
+        options?: QueryOptions<ITournament>,
+        populate?: PopulateOptions | (string | PopulateOptions)[]
+    ): Promise<ITournament> {
+        return await this.tournamentRepo.findById(id, projection, options, populate);
+    }
+
+    async increamentPrizePool(id: string | Types.ObjectId, increament: number): Promise<ITournament> {
+        return await this.tournamentRepo.updateById(id, { $inc: { prizePool: increament } }, { new: true });
     }
 }

@@ -8,6 +8,7 @@ import { BetOption, BetOptionSchema } from './schemas/bet-option.schema';
 @Module({
   imports: [MongooseModule.forFeature([{ name: BetOption.name, schema: BetOptionSchema }])],
   controllers: [BetController],
-  providers: [BetOptionService, BetOptionRepository]
+  providers: [BetOptionService, BetOptionRepository],
+  exports: [BetOptionService]
 })
 export class BetModule {}

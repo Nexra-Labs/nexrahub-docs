@@ -1,14 +1,15 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsMongoId, IsNumber, IsOptional } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateBetOptionDto {
     @IsMongoId()
     @ApiProperty({ description: 'Tournament ID', example: '60d21b4667d0d8992e610c85' })
-    tournament: string;
+    tournament: string | Types.ObjectId;
 
     @IsMongoId()
     @ApiProperty({ description: 'Gamer ID', example: '60d21b4967d0d8992e610c86' })
-    gamer: string;
+    gamer: string | Types.ObjectId;
 
     @IsOptional()
     @IsNumber()

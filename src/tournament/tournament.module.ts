@@ -7,10 +7,20 @@ import { TournamentService } from './providers/tournament.service';
 import { TournamentRepository } from './repositories/tournament.repository';
 import { GamerModule } from 'src/gamer/gamer.module';
 import { GameModule } from 'src/game/game.module';
+import { TournamentEntry, TournamentEntrySchema } from './schemas/tournament-entry.schema';
+import { TournamentEntryService } from './providers/tournament-entry.service';
+import { TournamentEntryRepository } from './repositories/tournament-entry.repository';
+import { BetModule } from 'src/bet/bet.module';
 
 @Module({
   controllers: [TournamentController, TournamentEntryController],
-  imports: [MongooseModule.forFeature([{ name: Tournament.name, schema: TournamentSchema }]), GamerModule, GameModule],
-  providers: [TournamentService, TournamentRepository]
+  imports: [
+    MongooseModule.forFeature([{ name: Tournament.name, schema: TournamentSchema }]),
+    MongooseModule.forFeature([{ name: TournamentEntry.name, schema: TournamentEntrySchema }]),
+    GamerModule,
+    GameModule,
+    BetModule
+  ],
+  providers: [TournamentService, TournamentRepository, TournamentEntryService, TournamentEntryRepository]
 })
-export class TournamentModule {}
+export class TournamentModule { }
