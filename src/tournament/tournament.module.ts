@@ -10,7 +10,7 @@ import { GameModule } from 'src/game/game.module';
 import { TournamentEntry, TournamentEntrySchema } from './schemas/tournament-entry.schema';
 import { TournamentEntryService } from './providers/tournament-entry.service';
 import { TournamentEntryRepository } from './repositories/tournament-entry.repository';
-import { PredictionModule } from 'src/bet/prediction.module';
+import { PredictionModule } from 'src/prediction/prediction.module';
 
 @Module({
   controllers: [TournamentController, TournamentEntryController],

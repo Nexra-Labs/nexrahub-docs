@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, HydratedDocument, Types } from 'mongoose';
 import { TournamentEntry } from '../schemas/tournament-entry.schema';
-import { PredictionOptionService } from 'src/bet/providers/prediction/prediction-option.service';
+import { PredictionOptionService } from 'src/prediction/providers/prediction/prediction-option.service';
 import { GamerService } from 'src/gamer/providers/gamer.service';
 import { TournamentService } from './tournament.service';
 import { CreateTournamentEntryDto } from '../dtos/create-tournament-entry.dto';

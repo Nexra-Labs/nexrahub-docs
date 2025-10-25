@@ -4,7 +4,7 @@ import { AppController } from './app/app.controller';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
 import { TournamentModule } from './tournament/tournament.module';
-import { PredictionModule } from './bet/prediction.module';
+import { PredictionModule } from './prediction/prediction.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { CommissionModule } from './commission/commission.module';
 import { AuthModule } from './auth/auth.module';

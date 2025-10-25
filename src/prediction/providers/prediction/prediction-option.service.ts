@@ -1,8 +1,8 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, HydratedDocument } from 'mongoose';
-import { CreatePredictionOptionDto } from 'src/bet/dtos/create-prediction-option.dto';
-import { PredictionOption } from 'src/bet/schemas/prediction-option.schema';
+import { CreatePredictionOptionDto } from 'src/prediction/dtos/create-prediction-option.dto';
+import { PredictionOption } from 'src/prediction/schemas/prediction-option.schema';
 
 @Injectable()
 export class PredictionOptionService {
