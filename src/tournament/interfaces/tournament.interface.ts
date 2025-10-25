@@ -9,6 +9,7 @@ export interface ITournament {
     description?: string;
     entryFee?: number;
     prizePool?: number;
+    totalPredictionAmount?: number;
     status?: TournamentStatus;
     startTime?: Date;
     endTime?: Date;

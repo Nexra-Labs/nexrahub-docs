@@ -47,6 +47,13 @@ export class Tournament extends Document {
     prizePool: number;
 
     @Prop({
+        type: Number,
+        default: 0,
+        min: 0
+    })
+    totalPredictionAmount: number;
+
+    @Prop({
         type: String,
         enum: Object.values(TournamentStatus),
         default: TournamentStatus.PENDING

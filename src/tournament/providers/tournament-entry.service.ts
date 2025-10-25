@@ -3,23 +3,21 @@ import {
     BadRequestException,
     NotFoundException,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, HydratedDocument, Types } from 'mongoose';
-import { TournamentEntry } from '../schemas/tournament-entry.schema';
-import { PredictionOptionService } from 'src/prediction/providers/prediction/prediction-option.service';
+import { Types } from 'mongoose';
+import { PredictionOptionService } from 'src/prediction/providers/prediction-option.service';
 import { GamerService } from 'src/gamer/providers/gamer.service';
 import { TournamentService } from './tournament.service';
 import { CreateTournamentEntryDto } from '../dtos/create-tournament-entry.dto';
 import { TournamentStatus } from '../enums/tournament-status.enum';
+import { TournamentEntryRepository } from '../repositories/tournament-entry.repository';
 
 @Injectable()
 export class TournamentEntryService {
     constructor(
-        @InjectModel(TournamentEntry.name)
-        private readonly tournamentEntryModel: Model<HydratedDocument<TournamentEntry>>,
+        private readonly tournamentEntryRepo: TournamentEntryRepository,
         private readonly gamerService: GamerService,
         private readonly tournamentService: TournamentService,
-        private readonly betOptionService: PredictionOptionService,
+        private readonly predictionOptionService: PredictionOptionService,
     ) { }
 
     async enterTournament(tournament: string | Types.ObjectId, dto: CreateTournamentEntryDto) {
@@ -35,20 +33,19 @@ export class TournamentEntryService {
             gamerDoc = await this.gamerService.registerGamer(tournamentDoc.game, gamer);
         }
 
-        const existingEntry = await this.tournamentEntryModel.findOne({
+        const existingEntry = await this.tournamentEntryRepo.findOne({
             tournament,
             gamer: gamerDoc._id,
         });
         if (existingEntry) throw new BadRequestException('Gamer already entered this tournament');
 
-        const newEntry = new this.tournamentEntryModel({
-            tournament,
-            gamer: gamerDoc._id,
-            entryFee: tournamentDoc.entryFee
-        });
         await Promise.all([
-            newEntry.save(),
-            this.betOptionService.createOption({
+            this.tournamentEntryRepo.create({
+                tournament: new Types.ObjectId(tournament),
+                gamer: new Types.ObjectId(gamerDoc._id),
+                entryFee: tournamentDoc.entryFee
+            }),
+            this.predictionOptionService.createOption({
                 tournament,
                 gamer: gamerDoc._id.toString(),
             }),

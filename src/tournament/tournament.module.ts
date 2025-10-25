@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TournamentController } from './tournament.controller';
-import { TournamentEntryController } from './tournament-entry.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Tournament, TournamentSchema } from './schemas/tournament.schema';
 import { TournamentService } from './providers/tournament.service';
@@ -13,14 +12,15 @@ import { TournamentEntryRepository } from './repositories/tournament-entry.repos
 import { PredictionModule } from 'src/prediction/prediction.module';
 
 @Module({
-  controllers: [TournamentController, TournamentEntryController],
+  controllers: [TournamentController],
   imports: [
     MongooseModule.forFeature([{ name: Tournament.name, schema: TournamentSchema }]),
     MongooseModule.forFeature([{ name: TournamentEntry.name, schema: TournamentEntrySchema }]),
     GamerModule,
     GameModule,
-    PredictionModule
+    forwardRef(() => PredictionModule)
   ],
-  providers: [TournamentService, TournamentRepository, TournamentEntryService, TournamentEntryRepository]
+  providers: [TournamentService, TournamentRepository, TournamentEntryService, TournamentEntryRepository],
+  exports: [TournamentService]
 })
 export class TournamentModule { }

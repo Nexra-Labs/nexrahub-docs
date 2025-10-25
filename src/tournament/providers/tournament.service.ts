@@ -79,4 +79,8 @@ export class TournamentService {
     async increamentPrizePool(id: string | Types.ObjectId, increament: number): Promise<ITournament> {
         return await this.tournamentRepo.updateById(id, { $inc: { prizePool: increament } }, { new: true });
     }
+
+    async incrementTotalPredictionAmount(id: string | Types.ObjectId, increment: number): Promise<ITournament> {
+        return await this.tournamentRepo.updateById(id, { $inc: { totalPredictionAmount: increment } }, { new: true });
+    }
 }

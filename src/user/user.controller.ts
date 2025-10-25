@@ -3,7 +3,6 @@ import {
     Patch,
     HttpCode,
     HttpStatus,
-    Req,
     Get,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiSecurity } from '@nestjs/swagger';

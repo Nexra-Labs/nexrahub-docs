@@ -1,11 +1,9 @@
-// Chill or funny adjectives
 const adjectives = [
     'sleepy', 'vibe', 'funny', 'cosmic', 'loud', 'tiny', 'lazy', 'mystic', 'witty', 'sassy',
     'cool', 'breezy', 'midnight', 'groovy', 'weird', 'spicy', 'fuzzy', 'moody', 'shy', 'bold',
     'crunchy', 'electric', 'frozen', 'dreamy', 'vivid', 'chaotic', 'sneaky', 'bouncy', 'cloudy', 'zesty'
 ];
 
-// Quirky nouns
 const nouns = [
     'panda', 'otter', 'pickle', 'wizard', 'banana', 'ghost', 'raccoon', 'ninja', 'waffle', 'pirate',
     'taco', 'bean', 'dragon', 'robot', 'breeze', 'snail', 'cupcake', 'jelly', 'joker', 'vortex',

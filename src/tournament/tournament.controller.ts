@@ -3,12 +3,17 @@ import { ApiTags, ApiOperation, ApiResponse, ApiSecurity } from '@nestjs/swagger
 import { TournamentService } from './providers/tournament.service';
 import { CreateTournamentDto } from './dtos/create-tournament.dto';
 import { UpdateTournamentDto } from './dtos/update-tournament.dto';
+import { CreateTournamentEntryDto } from './dtos/create-tournament-entry.dto';
+import { TournamentEntryService } from './providers/tournament-entry.service';
 
 @ApiTags('Tournaments')
 @ApiSecurity('jwt-auth')
 @Controller('tournament')
 export class TournamentController {
-    constructor(private readonly tournamentService: TournamentService) { }
+    constructor(
+        private readonly tournamentService: TournamentService,
+        private readonly tournamentEntryService: TournamentEntryService
+    ) { }
 
     @Post('create')
     @HttpCode(HttpStatus.CREATED)
@@ -46,7 +51,7 @@ export class TournamentController {
         return { message: 'Tournament created successfully', tournament: result };
     }
 
-    @Patch('update/:id')
+    @Patch(':tournamentId/update')
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Update a pending tournament (if not started)' })
     @ApiResponse({
@@ -77,12 +82,12 @@ export class TournamentController {
             }
         }
     })
-    async update(@Param('id') id: string, @Body() dto: UpdateTournamentDto) {
+    async update(@Param('tournamentIdupdate') id: string, @Body() dto: UpdateTournamentDto) {
         const result = await this.tournamentService.updateTournament(id, dto);
         return { message: 'Tournament updated successfully', tournament: result };
     }
 
-    @Patch('publish/:id')
+    @Patch(':tournamentIdupdate/publish')
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Publish a pending tournament that has not yet started' })
     @ApiResponse({
@@ -116,5 +121,41 @@ export class TournamentController {
     async publish(@Param('id') id: string) {
         const result = await this.tournamentService.publishTournament(id);
         return { message: 'Tournament published successfully', tournament: result };
+    }
+
+    @Post(':tournamentId/join')
+    @HttpCode(HttpStatus.CREATED)
+    @ApiOperation({
+        summary: 'Enter a gamer into a tournament',
+        description:
+            'Creates a gamer if not existing, adds them to the tournament, creates their bet option, and updates the prize pool.',
+    })
+    @ApiResponse({
+        status: HttpStatus.CREATED,
+        description: 'Successfully joined the tournament.',
+        schema: {
+            example: {
+                message: 'Gamer successfully joined the tournament.',
+                entry: {
+                    id: '6718ac03e0ad9b01f43b76b3',
+                    tournament: '6718a8dde0ad9b01f43b76a2',
+                    gamer: '6718ab5ee0ad9b01f43b76a8',
+                    entryFee: 100,
+                    joinedAt: '2025-10-23T13:25:48.112Z',
+                    eliminated: false,
+                    eliminatedAt: null,
+                    rank: null,
+                    createdAt: '2025-10-23T13:25:48.112Z',
+                    updatedAt: '2025-10-23T13:25:48.112Z',
+                }
+            }
+        }
+    })
+    async joinTournament(@Param('tournamentId') tournamentId: string, @Body() dto: CreateTournamentEntryDto) {
+        const entry = await this.tournamentEntryService.enterTournament(tournamentId, dto);
+        return {
+            message: 'Gamer successfully joined the tournament.',
+            entry
+        };
     }
 }

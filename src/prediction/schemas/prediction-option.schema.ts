@@ -39,10 +39,12 @@ PredictionOptionSchema.index({ tournament: 1, gamer: 1 }, { unique: true });
 PredictionOptionSchema.virtual('odds').get(function (this: PredictionOption & { tournament?: any }) {
     try {
         const tournament = this.tournament;
-        if (!tournament || typeof tournament.prizePool !== 'number' || tournament.prizePool <= 0) {
+        if (!tournament || typeof tournament.totalPredictionAmount !== 'number' || tournament.totalPredictionAmount < 0) {
             return null;
         }
-        return this.totalPredictionAmount / tournament.prizePool;
+        const prizePool = tournament.totalPredictionAmount === 0 ? 1 : tournament.totalPredictionAmount;
+        const odds = prizePool / (this.totalPredictionAmount === 0 ? 1 : this.totalPredictionAmount);
+        return parseFloat(odds.toFixed(2));
     } catch {
         return null;
     }

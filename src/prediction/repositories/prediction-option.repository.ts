@@ -7,7 +7,7 @@ import { PredictionOption } from '../schemas/prediction-option.schema';
 
 @Injectable()
 export class PredictionOptionRepository extends BaseRepository<IPredictionOption> {
-    constructor(@InjectModel(PredictionOption.name) betOptionModel: Model<IPredictionOption>) {
-        super(betOptionModel);
+    constructor(@InjectModel(PredictionOption.name) predictionOptionModel: Model<IPredictionOption>) {
+        super(predictionOptionModel);
     }
 }

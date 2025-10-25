@@ -70,7 +70,7 @@ export class GameController {
         return { message: 'Game created successfully', game: result };
     }
 
-    @Patch(':id')
+    @Patch(':gameId/update')
     @HttpCode(HttpStatus.OK)
     @Authorize(UserRole.DEVELOPER)
     @ApiOperation({ summary: 'Update a game' })
@@ -107,7 +107,7 @@ export class GameController {
     })
     async updateGame(
         @ActiveUser() user: IUser,
-        @Param('id') id: string,
+        @Param('gameId') id: string,
         @Body() dto: UpdateGameDto,
     ) {
         const result = await this.gameService.updateGame(id, dto, user.id);
@@ -153,7 +153,7 @@ export class GameController {
         return { message: 'List of user games fetched successfully', games: result };
     }
 
-    @Post(':id/view-apikey')
+    @Post(':gameId/view-apikey')
     @HttpCode(HttpStatus.OK)
     @Authorize(UserRole.DEVELOPER)
     @ApiOperation({ summary: 'View game API key (OTP required)' })
@@ -178,7 +178,7 @@ export class GameController {
         return { message: 'API key fetched successfully', result };
     }
 
-    @Post(':id/regenerate-apikey')
+    @Patch(':gameId/regenerate-apikey')
     @HttpCode(HttpStatus.OK)
     @Authorize(UserRole.DEVELOPER)
     @ApiOperation({ summary: 'Regenerate game API key (OTP required)' })
