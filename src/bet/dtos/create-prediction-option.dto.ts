@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsMongoId, IsNumber, IsOptional } from 'class-validator';
 import { Types } from 'mongoose';
 
-export class CreateBetOptionDto {
+export class CreatePredictionOptionDto {
     @IsMongoId()
     @ApiProperty({ description: 'Tournament ID', example: '60d21b4667d0d8992e610c85' })
     tournament: string | Types.ObjectId;
@@ -14,5 +14,5 @@ export class CreateBetOptionDto {
     @IsOptional()
     @IsNumber()
     @ApiPropertyOptional({ description: 'Total bet amount', example: 1000 })
-    totalBetAmount?: number;
+    totalPredictionAmount?: number;
 }

@@ -6,9 +6,9 @@ import { Gamer } from 'src/gamer/schemas/gamer.schema';
 @Schema({
     timestamps: true,
     versionKey: false,
-    collection: 'bet_options'
+    collection: 'prediction_options'
 })
-export class BetOption extends Document {
+export class PredictionOption extends Document {
     @Prop({
         type: Types.ObjectId,
         ref: Tournament.name,
@@ -30,25 +30,25 @@ export class BetOption extends Document {
         default: 0,
         min: 0
     })
-    totalBetAmount: number;
+    totalPredictionAmount: number;
 }
 
-export const BetOptionSchema = SchemaFactory.createForClass(BetOption);
+export const PredictionOptionSchema = SchemaFactory.createForClass(PredictionOption);
 
-BetOptionSchema.index({ tournament: 1, gamer: 1 }, { unique: true });
-BetOptionSchema.virtual('odds').get(function (this: BetOption & { tournament?: any }) {
+PredictionOptionSchema.index({ tournament: 1, gamer: 1 }, { unique: true });
+PredictionOptionSchema.virtual('odds').get(function (this: PredictionOption & { tournament?: any }) {
     try {
         const tournament = this.tournament;
         if (!tournament || typeof tournament.prizePool !== 'number' || tournament.prizePool <= 0) {
             return null;
         }
-        return this.totalBetAmount / tournament.prizePool;
+        return this.totalPredictionAmount / tournament.prizePool;
     } catch {
         return null;
     }
 });
-BetOptionSchema.virtual('id').get(function (this: BetOption) {
+PredictionOptionSchema.virtual('id').get(function (this: PredictionOption) {
     return (this._id as Types.ObjectId).toHexString();
 });
-BetOptionSchema.set('toJSON', { virtuals: true });
-BetOptionSchema.set('toObject', { virtuals: true });
+PredictionOptionSchema.set('toJSON', { virtuals: true });
+PredictionOptionSchema.set('toObject', { virtuals: true });

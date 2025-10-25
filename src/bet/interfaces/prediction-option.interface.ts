@@ -1,11 +1,11 @@
 import { Types } from 'mongoose';
 
-export interface IBetOption {
+export interface IPredictionOption {
     _id?: string | Types.ObjectId;
     id?: string | Types.ObjectId;
     tournament: Types.ObjectId;
     gamer: Types.ObjectId;
-    totalBetAmount: number;
+    totalPredictionAmount: number;
     createdAt?: Date;
     updatedAt?: Date;
     odds?: number;

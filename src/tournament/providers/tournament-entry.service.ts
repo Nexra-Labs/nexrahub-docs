@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, HydratedDocument, Types } from 'mongoose';
 import { TournamentEntry } from '../schemas/tournament-entry.schema';
-import { BetOptionService } from 'src/bet/providers/bet-option.service';
+import { PredictionOptionService } from 'src/bet/providers/prediction/prediction-option.service';
 import { GamerService } from 'src/gamer/providers/gamer.service';
 import { TournamentService } from './tournament.service';
 import { CreateTournamentEntryDto } from '../dtos/create-tournament-entry.dto';
@@ -19,7 +19,7 @@ export class TournamentEntryService {
         private readonly tournamentEntryModel: Model<HydratedDocument<TournamentEntry>>,
         private readonly gamerService: GamerService,
         private readonly tournamentService: TournamentService,
-        private readonly betOptionService: BetOptionService,
+        private readonly betOptionService: PredictionOptionService,
     ) { }
 
     async enterTournament(tournament: string | Types.ObjectId, dto: CreateTournamentEntryDto) {

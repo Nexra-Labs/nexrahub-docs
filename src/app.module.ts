@@ -4,7 +4,7 @@ import { AppController } from './app/app.controller';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
 import { TournamentModule } from './tournament/tournament.module';
-import { BetModule } from './bet/bet.module';
+import { PredictionModule } from './bet/prediction.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { CommissionModule } from './commission/commission.module';
 import { AuthModule } from './auth/auth.module';
@@ -32,7 +32,7 @@ const ENV = process.env.NODE_ENV;
     GameModule,
     GamerModule,
     TournamentModule,
-    BetModule,
+    PredictionModule,
     TransactionModule,
     CommissionModule,
     ConfigModule.forRoot({

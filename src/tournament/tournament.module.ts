@@ -10,7 +10,7 @@ import { GameModule } from 'src/game/game.module';
 import { TournamentEntry, TournamentEntrySchema } from './schemas/tournament-entry.schema';
 import { TournamentEntryService } from './providers/tournament-entry.service';
 import { TournamentEntryRepository } from './repositories/tournament-entry.repository';
-import { BetModule } from 'src/bet/bet.module';
+import { PredictionModule } from 'src/bet/prediction.module';
 
 @Module({
   controllers: [TournamentController, TournamentEntryController],
@@ -19,7 +19,7 @@ import { BetModule } from 'src/bet/bet.module';
     MongooseModule.forFeature([{ name: TournamentEntry.name, schema: TournamentEntrySchema }]),
     GamerModule,
     GameModule,
-    BetModule
+    PredictionModule
   ],
   providers: [TournamentService, TournamentRepository, TournamentEntryService, TournamentEntryRepository]
 })
