@@ -148,7 +148,7 @@
                 ]
             }
         },
-        "/tournament/{tournamentIdupdate}/publish": {
+        "/tournament/{tournamentId}/publish": {
             "patch": {
                 "operationId": "TournamentController_publish",
                 "parameters": [
@@ -163,7 +163,7 @@
                         "description": "Game API key for authentication"
                     },
                     {
-                        "name": "id",
+                        "name": "tournamentId",
                         "required": true,
                         "in": "path",
                         "schema": {
