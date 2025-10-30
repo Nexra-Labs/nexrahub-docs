@@ -296,7 +296,7 @@
     "tags": [],
     "servers": [
         {
-            "url": "https://nexrahub-core.vercel.app/",
+            "url": "https://api.nexra.xyz/",
             "description": "Local environment"
         }
     ],
