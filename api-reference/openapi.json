@@ -4,7 +4,18 @@
         "/tournament/create": {
             "post": {
                 "operationId": "TournamentController_create",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ..."
+                        },
+                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -264,15 +275,6 @@
         }
     ],
     "components": {
-        "securitySchemes": {
-            "jwt-auth": {
-                "scheme": "bearer",
-                "bearerFormat": "JWT",
-                "type": "http",
-                "name": "Authorization",
-                "in": "header"
-            }
-        },
         "schemas": {
             "CreateTournamentDto": {
                 "type": "object",
