@@ -7,7 +7,7 @@
   "dark": "#4C1D95"     
 },
   "favicon": "/favicon.ico",
-  "openapi": "/api-reference/openapi.json",
+  "openapi": "/api/openapi.json",
   "navigation": {
     "tabs": [
       {
@@ -51,16 +51,16 @@
           {
             "group": "Overview",
             "pages": [
-              "api-reference/introduction"
+              "api/introduction"
             ]
           },
           {
             "group": "Tournaments",
             "pages": [
-              "api-reference/endpoint/create-tournament",
-              "api-reference/endpoint/update-tournament",
-              "api-reference/endpoint/publish-tournament",
-              "api-reference/endpoint/join-tournament"
+              "api/endpoint/create-tournament",
+              "api/endpoint/update-tournament",
+              "api/endpoint/publish-tournament",
+              "api/endpoint/join-tournament"
             ]
           }
         ]
