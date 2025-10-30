@@ -67,13 +67,24 @@
                 "summary": "Create a tournament",
                 "tags": [
                     "Tournaments"
-                ]
+                ],
+                "description": "Create a tournament"
             }
         },
         "/tournament/{tournamentId}/update": {
             "patch": {
                 "operationId": "TournamentController_update",
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ..."
+                        },
+                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                    },
                     {
                         "name": "tournamentIdupdate",
                         "required": true,
@@ -142,6 +153,16 @@
                 "operationId": "TournamentController_publish",
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ..."
+                        },
+                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                    },
+                    {
                         "name": "id",
                         "required": true,
                         "in": "path",
@@ -199,6 +220,16 @@
                 "description": "Creates a gamer if not existing, adds them to the tournament, creates their bet option, and updates the prize pool.",
                 "operationId": "TournamentController_joinTournament",
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ..."
+                        },
+                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                    },
                     {
                         "name": "tournamentId",
                         "required": true,
@@ -267,11 +298,6 @@
         {
             "url": "https://nexrahub-core.vercel.ap/",
             "description": "Local environment"
-        }
-    ],
-    "security": [
-        {
-            "jwt-auth": []
         }
     ],
     "components": {

@@ -1,11 +1,82 @@
 ---
-title: "API Reference"
-description: "Explore the Nexra API endpoints."
+title: "Introduction"
+description: "Get started with Nexra’s API for creating and managing tournaments, gamers, and rewards."
 ---
 
-# Nexra API Reference
+# 🧩 Nexra API Reference
 
-Welcome to the Nexra API documentation.  
-Below you’ll find the available endpoints auto-generated from our OpenAPI spec.
+Nexra provides a REST API that allows game developers to **create, manage, and publish tournaments**, while automating **entry fees, prize pools, and payouts**.
 
-<OpenAPI src="./openapi.json" hideSchemas={false} />
+All API requests require authentication using your **Game API Key**, which you obtain from the Nexra Dashboard.
+
+---
+
+## 🔑 Authentication
+
+Include your Game API Key in the `Authorization` header:
+
+```http
+Authorization: ApiKey <your_game_api_key>
+Content-Type: application/json
+```
+
+> Keep your API Key secure. Do not expose it in client-side code.
+
+---
+
+## ⚡ Base URL
+
+Use the following base URL for all API requests:
+
+```
+https://nexrahub-core.vercel.app/
+```
+
+---
+
+## 🏷️ Common Response Structure
+
+Most endpoints return JSON in the following structure:
+
+```json
+{
+"message": "Descriptive success or error message",
+"data": { ... }
+}
+```
+
+- `message` – Human-readable confirmation or error description.
+- `data` – Object containing endpoint-specific response details.
+
+---
+
+## 📁 Core Resources
+
+The Nexra API is structured around these main resources:
+
+- **Tournaments** – Create, update, publish, and manage tournaments.
+- **Gamers** – Add players to tournaments and track performance.
+- **Rewards** – Automatically handle prize pools, payouts, and tips.
+
+> Detailed endpoint examples and parameters are listed in their dedicated pages.
+
+---
+
+## 📝 Next Steps
+
+<Columns cols={2}>
+  <Card
+    title="Tournaments"
+    icon="trophy"
+    href="/api-reference/endpoint/create-tournament"
+  >
+    Learn how to create, update, and publish tournaments.
+  </Card>
+  <Card
+    title="Gamers & Rewards"
+    icon="coins"
+    href="/api-reference/endpoint/join-gamer"
+  >
+    Understand how to add gamers and manage prize pools automatically.
+  </Card>
+</Columns>

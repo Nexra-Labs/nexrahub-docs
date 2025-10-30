@@ -1,0 +1,117 @@
+---
+title: "Creating and Managing Tournaments"
+description: "Learn how to create, publish, and manage tournaments using Nexra’s API."
+---
+
+# 🏆 Creating and Managing Tournaments
+
+This guide explains how developers can create and manage tournaments in their games using Nexra. All prize pools, entry fees, and payouts are handled automatically.
+
+---
+
+## 🔑 Prerequisites
+
+- You must have a **Game API Key** from the Nexra Dashboard.
+- Ensure your game is integrated and ready to make API requests.
+
+---
+
+## 🛠 Create a Tournament
+
+Use the `POST /tournament/create` endpoint to create a new tournament.
+
+**Required fields:**
+
+- `game` – ID of your game.
+- `name` – Tournament name.
+- `description` – Short description.
+- `entryFee` – Optional entry fee for players.
+- `startTime` / `endTime` – Tournament start and end times.
+
+**Example Request:**
+
+```http
+POST /tournament/create
+Authorization: ApiKey <your_game_api_key>
+Content-Type: application/json
+
+{
+  "game": "67188e92b41c0eec54f22b1f",
+  "name": "Battle of Nexra",
+  "description": "An intense tournament for top gamers",
+  "entryFee": 50,
+  "startTime": "2025-11-10T18:00:00Z",
+  "endTime": "2025-11-10T21:00:00Z"
+}
+```
+
+**Response:**
+
+- `201 Created` – Tournament created successfully, returned with all tournament details.
+
+---
+
+## 📤 Publish a Tournament
+
+A tournament remains **pending** until published. Use `PATCH /tournament/{tournamentId}/publish` to make it live.
+
+**Example Request:**
+
+```http
+PATCH /tournament/68fa2b750366dd5ff66d599d/publish
+Authorization: ApiKey <your_game_api_key>
+```
+
+**Response:**
+
+- `200 OK` – Tournament is now **published** and can accept gamer entries.
+
+---
+
+## ✏️ Update a Tournament
+
+Pending tournaments can be updated before they start using `PATCH /tournament/{tournamentId}/update`.
+
+**Fields you can update:**
+
+- `name`, `description`, `entryFee`, `startTime`, `endTime`
+
+**Example Request:**
+
+```http
+PATCH /tournament/68fa2b750366dd5ff66d599d/update
+Authorization: ApiKey <your_game_api_key>
+Content-Type: application/json
+
+{
+  "name": "Battle of Nexra - Updated",
+  "entryFee": 75
+}
+```
+
+**Response:**
+
+- `200 OK` – Tournament updated successfully.
+
+---
+
+## 🎯 Summary Workflow
+
+1. **Create a tournament** → it starts in **pending** status.
+2. **Update details** if needed before publishing.
+3. **Publish** the tournament → gamers can join.
+4. **Nexra automatically handles** entry fees, prize pool updates, and payouts.
+
+---
+
+## 🔗 Next Steps
+
+<Columns cols={1}>
+  <Card
+    title="API Reference"
+    icon="terminal"
+    href="/api-reference/introduction"
+  >
+    Explore all endpoints for tournaments, gamers, and more.
+  </Card>
+</Columns>

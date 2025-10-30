@@ -1,0 +1,60 @@
+---
+title: "Authentication"
+description: "Learn how to authenticate with Nexra’s API using your Game API Key."
+---
+
+# 🔑 Authentication
+
+All requests to Nexra’s API require authentication to ensure your game and data are secure. Unlike typical bearer tokens, Nexra uses a **Game API Key** that you get when you register your game on the dashboard.
+
+---
+
+## 📝 Get Your Game API Key
+
+1. Go to the [Nexra Dashboard](https://nexra.xyz/dashboard).  
+2. Click **Create New Game**.  
+3. Fill in your game details (name, description, etc.).  
+4. Once the game is created, you will receive your **Game API Key**.
+
+> Keep your API Key secret. Do not share it publicly or embed it in client-side code.
+
+---
+
+## 🔗 Using Your API Key
+
+Include your API Key in the `Authorization` header for all API requests:
+
+```http
+Authorization: ApiKey <your_game_api_key>
+Content-Type: application/json
+```
+
+**Example: Create a Tournament**
+
+```http
+POST /tournament/create
+Authorization: ApiKey 123456789abcdef
+Content-Type: application/json
+
+{
+  "game": "67188e92b41c0eec54f22b1f",
+  "name": "Battle of Nexra",
+  "description": "An intense tournament for top gamers",
+  "entryFee": 50,
+  "startTime": "2025-11-10T18:00:00Z",
+  "endTime": "2025-11-10T21:00:00Z"
+}
+```
+
+---
+
+## 🔒 Best Practices
+
+- Never expose your Game API Key in public repositories or frontend code.  
+- Rotate your API Key if you believe it has been compromised.  
+- Always use HTTPS to secure your API requests.  
+- Log and monitor requests from your game for unusual activity.  
+
+---
+
+This page ensures developers **understand how to authenticate** before making API calls like creating or managing tournaments.

@@ -1,80 +1,185 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get started with Nexra quickly: integrate tournaments, allow gamers to join, and start earning."
 ---
 
-## Get started in three steps
+# 🚀 Quickstart with Nexra
 
-Get your documentation site running locally and make your first customization.
+Follow these steps to **integrate Nexra and create your first tournament**. Each step is expandable for details and examples.
 
-### Step 1: Set up your local environment
+<Steps>
+  <Step title="1. Get Your Game API Key">
+    First, register your game in the Nexra Dashboard:
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+    1. Go to the [Nexra Dashboard](https://nexra.xyz/dashboard).
+    2. Click **Create New Game** and fill in the details.
+    3. Once your game is created, you will receive a **Game API Key**.
 
-### Step 2: Deploy your changes
+    **Use this API Key for authorization in your requests:**
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    ```http
+    Authorization: ApiKey <your_game_api_key>
+    Content-Type: application/json
+    ```
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+    > Replace `<your_game_api_key>` with the API Key provided for your game.
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+  </Step>
 
-### Step 3: Go live
+  <Step title="2. Create Your First Tournament">
+    Use the `POST /tournament/create` endpoint to create tournaments from your game.
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+    **Request Example:**
 
-## Next steps
+    ```http
+    POST /tournament/create
+    Authorization: ApiKey <your_game_api_key>
+    ```
+    **Request Body Example:**
 
-Now that you have your docs running, explore these key features:
+    ```json
+    {
+      "game": "67188e92b41c0eec54f22b1f",
+      "name": "Battle of Nexra",
+      "description": "An intense tournament for top gamers",
+      "entryFee": 50,
+      "startTime": "2025-11-10T18:00:00Z",
+      "endTime": "2025-11-10T21:00:00Z"
+    }
+    ```
 
-<CardGroup cols={2}>
+    **Response Example:**
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
+    ```json
+    {
+      "message": "Tournament created successfully",
+      "tournament": {
+        "message": "Tournament created successfully",
+        "tournament": {
+            "game": {
+                "_id": "68f9ce6d27a07cdb23dd65c7",
+                "name": "Battle Arenaa",
+                "id": "68f9ce6d27a07cdb23dd65c7"
+            },
+            "name": "Battle of Nexra",
+            "description": "An intense tournament for top gamers",
+            "entryFee": 50,
+            "prizePool": 0,
+            "status": "pending",
+            "startTime": "2025-11-10T18:00:00.000Z",
+            "endTime": "2025-11-10T21:00:00.000Z",
+            "winner": null,
+            "_id": "68fa2b750366dd5ff66d599d",
+            "createdAt": "2025-10-23T13:19:49.620Z",
+            "updatedAt": "2025-10-23T13:19:49.620Z",
+            "id": "68fa2b750366dd5ff66d599d"
+        }
+      }
+    }
+    ```
+    > Keep the `id` for future updates or publishing.
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
+  </Step>
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
+  <Step title="3. Publish Your Tournament">
+    Make your tournament live for gamers via `PATCH /tournament/{tournamentId}/publish`.
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
+    **Request Example:**
 
-</CardGroup>
+    ```http
+    PATCH /tournament/:tournamentId/publish
+    Authorization: ApiKey <your_game_api_key>
+    ```
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+    **Response Example:**
+
+    ```json
+    {
+      "message": "Tournament published successfully",
+      "tournament": {
+        "game": {
+            "_id": "68f9ce6d27a07cdb23dd65c7",
+            "name": "Battle Arenaa",
+            "id": "68f9ce6d27a07cdb23dd65c7"
+        },
+        "name": "Battle of Nexra",
+        "description": "An intense tournament for top gamers",
+        "entryFee": 50,
+        "prizePool": 0,
+        "status": "pending",
+        "startTime": "2025-11-10T18:00:00.000Z",
+        "endTime": "2025-11-10T21:00:00.000Z",
+        "winner": null,
+        "_id": "68fa2b750366dd5ff66d599d",
+        "createdAt": "2025-10-23T13:19:49.620Z",
+        "updatedAt": "2025-10-23T13:19:49.620Z",
+        "id": "68fa2b750366dd5ff66d599d"
+      }
+    }
+    ```
+
+  </Step>
+
+  <Step title="4. Gamers Join via Your Game">
+    Once integrated, gamers can join tournaments from your game. Your game calls: `POST /tournament/{tournamentId}/join` when a gamer chooses to enter.
+    Developers only need to integrate this action; gamers trigger it naturally through the game interface.
+
+    **Request Example:**
+
+    ```http
+    POST /tournament/:tournamentId/join
+    Authorization: ApiKey <your_game_api_key>
+    ```
+
+    **Request Body Example:**
+
+    ```json
+    {
+      "gamer": "silent_gamer"
+    }
+    ```
+
+    **Response Example:**
+
+    ```json
+    {
+      "message": "Gamer successfully joined the tournament",
+      "entry": {
+          "id": "6718ac03e0ad9b01f43b76b3",
+          "tournament": "6718a8dde0ad9b01f43b76a2",
+          "gamer": "6718ab5ee0ad9b01f43b76a8",
+          "entryFee": 100,
+          "joinedAt": "2025-10-23T13:25:48.112Z",
+          "eliminated": false,
+          "eliminatedAt": null,
+          "rank": null,
+          "createdAt": "2025-10-23T13:25:48.112Z",
+          "updatedAt": "2025-10-23T13:25:48.112Z"
+      }
+    }
+    ```
+
+  </Step>
+
+  <Step title="5. Optional: Update or Eliminate Players">
+    Developers can update tournament details or remove players dynamically via: `PATCH /tournament/{tournamentId}/eliminate`
+
+  </Step>
+</Steps>
+
+---
+
+## 🎯 Next Steps
+
+<Columns cols={2}>
+  <Card
+    title="API Reference"
+    icon="terminal"
+    href="/api-reference/introduction"
+  >
+    Explore all Nexra endpoints and integrate advanced features.
+  </Card>
+  <Card title="Rewards" icon="coins" href="/gamers/rewards">
+    Learn how Nexra automatically manages prizes, entry fees, and payouts for tournaments.
+  </Card>
+</Columns>

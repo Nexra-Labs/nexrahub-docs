@@ -1,0 +1,100 @@
+---
+title: "Concepts"
+description: "Understand the core concepts and workflows behind Nexra: games, tournaments, gamers, fans, predictions, and rewards."
+---
+
+# 🧠 Nexra Concepts
+
+Before integrating Nexra, it helps to understand the **key entities and workflows** in our platform.
+
+---
+
+## 🎮 Game
+
+A **Game** is the top-level entity in Nexra. Developers register their game via the Nexra Dashboard to receive a **Game API Key**, which is used for authorization in all API requests.
+
+**Key points:**
+
+- Contains tournaments.
+- Managed entirely by the developer via API integration.
+- Provides analytics and insights for tournaments and player engagement.
+
+---
+
+## 🏆 Tournament
+
+A **Tournament** is an event where gamers compete. Each tournament can have:
+
+- **Entry fee** (optional, automatically added to the prize pool).
+- **Prize pool** (automatically updated as gamers join).
+- **Start and end times**.
+- **Status**: pending → published → completed.
+
+**Workflow:**
+
+1. Developer creates a tournament via `POST /tournament/create`.
+2. Tournament stays pending until published.
+3. Once published, gamers can join through the game integration.
+4. Nexra automatically manages the prize pool and payouts.
+
+---
+
+## 👨‍💻 Gamer
+
+A **Gamer** is a participant in a tournament. Gamers join tournaments through the game integrated with Nexra.
+
+**Key points:**
+
+- Gamers pay the entry fee (if applicable).
+- Gamers’ participation updates the prize pool automatically.
+- Gamers’ progress, ranks, and elimination status are tracked by Nexra.
+
+---
+
+## 👥 Fan
+
+Fans interact with tournaments without directly playing. They can:
+
+- **Predict outcomes** of matches and earn rewards for accuracy.
+- **Tip gamers** to support their favorite participants.
+- **Fund tournaments** to contribute to the community.
+
+> Note: All rewards, predictions, and tips are automatically managed by Nexra.
+
+---
+
+## 💰 Predictions & Rewards
+
+Nexra handles all **calculations and payouts** automatically.
+
+- Gamers’ entry fees go into the prize pool.
+- Accurate predictions earn rewards for fans.
+- Winners of tournaments receive their share of the prize pool automatically.
+- No manual action required from developers; Nexra ensures payouts are accurate and timely.
+
+---
+
+## 🔄 Statuses
+
+Tournaments have several statuses:
+
+- **Pending** – created but not yet published.
+- **Published** – live and accepting gamers.
+- **Ongoing** – actively running matches.
+- **Completed** – tournament finished, prizes distributed.
+- **Eliminated** – gamers removed from the tournament due to elimination rules.
+
+---
+
+## 🔗 Workflow Summary
+
+1. Developer registers game → receives API Key.
+2. Developer creates tournament → tournament pending.
+3. Developer publishes tournament → gamers join.
+4. Gamers compete → Nexra updates ranks and prize pool.
+5. Fans predict, tip, or fund tournaments → rewards distributed automatically.
+6. Tournament completes → winners receive payouts.
+
+---
+
+This page prepares developers to **understand the structure and logic** of Nexra before they move on to Quickstart and API Reference.

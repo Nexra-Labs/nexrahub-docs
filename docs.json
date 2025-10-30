@@ -1,11 +1,11 @@
 {
-  "theme": "mint",
-  "name": "Nexra Documentation",
+  "theme": "maple",
+  "name": "nexra",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
-  },
+  "primary": "#7D5FFF", 
+  "light": "#A78BFA",   
+  "dark": "#4C1D95"     
+},
   "favicon": "/favicon.ico",
   "openapi": "/api-reference/openapi.json",
   "navigation": {
@@ -17,17 +17,16 @@
             "group": "Overview",
             "pages": [
               "index",
-              "quickstart",
-              "concepts"
+              "who-is-it-for",
+              "concepts",
+              "quickstart"
             ]
           },
           {
             "group": "For Game Developers",
             "pages": [
               "devs/authentication",
-              "devs/creating-tournaments",
-              "devs/webhooks",
-              "devs/errors"
+              "devs/creating-tournaments"
             ]
           },
           {
@@ -38,7 +37,7 @@
             ]
           },
           {
-            "group": "For Users",
+            "group": "For Fans",
             "pages": [
               "users/predictions",
               "users/funding"
@@ -50,30 +49,29 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Endpoints",
+            "group": "Overview",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Tournaments",
             "pages": [
-              "api-reference/endpoint/create-tournament"
+              "api-reference/endpoint/create-tournament",
+              "api-reference/endpoint/update-tournament",
+              "api-reference/endpoint/publish-tournament",
+              "api-reference/endpoint/join-tournament"
             ]
           }
         ]
       }
     ]
   },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "https://t.me/jessie_chuks"
       }
     ],
     "primary": {
