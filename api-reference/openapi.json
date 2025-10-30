@@ -6,14 +6,14 @@
                 "operationId": "TournamentController_create",
                 "parameters": [
                     {
-                        "name": "Authorization",
+                        "name": "x-api-key",
                         "in": "header",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "Bearer eyJ..."
+                            "example": "abc123xyz456"
                         },
-                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                        "description": "Game API key for authentication"
                     }
                 ],
                 "requestBody": {
@@ -76,14 +76,14 @@
                 "operationId": "TournamentController_update",
                 "parameters": [
                     {
-                        "name": "Authorization",
+                        "name": "x-api-key",
                         "in": "header",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "Bearer eyJ..."
+                            "example": "abc123xyz456"
                         },
-                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                        "description": "Game API key for authentication"
                     },
                     {
                         "name": "tournamentIdupdate",
@@ -153,14 +153,14 @@
                 "operationId": "TournamentController_publish",
                 "parameters": [
                     {
-                        "name": "Authorization",
+                        "name": "x-api-key",
                         "in": "header",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "Bearer eyJ..."
+                            "example": "abc123xyz456"
                         },
-                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                        "description": "Game API key for authentication"
                     },
                     {
                         "name": "id",
@@ -221,14 +221,14 @@
                 "operationId": "TournamentController_joinTournament",
                 "parameters": [
                     {
-                        "name": "Authorization",
+                        "name": "x-api-key",
                         "in": "header",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "Bearer eyJ..."
+                            "example": "abc123xyz456"
                         },
-                        "description": "Bearer JWT token. Example: 'Bearer <token>'"
+                        "description": "Game API key for authentication"
                     },
                     {
                         "name": "tournamentId",
