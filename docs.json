@@ -1,45 +1,56 @@
 {
   "theme": "mint",
-  "name": "nexra docs",
+  "name": "Nexra Documentation",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
     "dark": "#15803D"
   },
   "favicon": "/favicon.ico",
-  "openapi": "./api-reference/openapi.json",
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Overview",
             "pages": [
               "index",
               "quickstart",
-              "development"
+              "concepts"
+            ]
+          },
+          {
+            "group": "For Game Developers",
+            "pages": [
+              "devs/authentication",
+              "devs/creating-tournaments",
+              "devs/webhooks",
+              "devs/errors"
+            ]
+          },
+          {
+            "group": "For Gamers",
+            "pages": [
+              "gamers/join-tournament",
+              "gamers/rewards"
+            ]
+          },
+          {
+            "group": "For Users",
+            "pages": [
+              "users/predictions",
+              "users/funding"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "API Reference",
         "groups": [
           {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+            "group": "Endpoints",
+            "openapi": "./api-reference/openapi.json"
           }
         ]
       }
@@ -64,15 +75,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
